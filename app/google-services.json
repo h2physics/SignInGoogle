@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "432653136551",
+    "project_id": "sound-dream-177616"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:432653136551:android:edd27d14fbe60a12",
+        "android_client_info": {
+          "package_name": "h2physics.signingmail"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "432653136551-c5hvdcjl905uv4ota4meb3kor74hrohs.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "432653136551-dc7jtpijm0sit52n4opovpgu4098ukmj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "h2physics.signingmail",
+            "certificate_hash": "e8280fdbc01c6ba93f779714702ab1d472141188"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD2PJ8U1stBbNZvyGBUF1flS71PuEhNCno"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
