@@ -1,6 +1,7 @@
 package h2physics.signingmail;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +10,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.google.android.gms.auth.GoogleAuthException;
+import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -17,6 +20,8 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
+
+import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener{
     public static final String LOG_TAG = MainActivity.class.getSimpleName();
@@ -47,10 +52,12 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             if (result.isSuccess()){
                 GoogleSignInAccount account = result.getSignInAccount();
                 Log.e(LOG_TAG, account.getDisplayName() + " - " + account.getEmail());
-                Intent intent = new Intent(this, DetailActivity.class);
-                intent.putExtra("SignIn", account);
-                startActivity(intent);
-                finish();
+//                Intent intent = new Intent(this, DetailActivity.class);
+
+//                intent.putExtra("SignIn", account);
+//                startActivity(intent);
+//                finish();
+                new GetAccessToken().execute(account);
             } else {
                 Log.e(LOG_TAG, "Login unsuccessfully");
             }
@@ -83,6 +90,30 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     private void signIn(){
         Intent intent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         startActivityForResult(intent, SIGN_IN_CODE);
+    }
+
+    private class GetAccessToken extends AsyncTask<GoogleSignInAccount, Void, String> {
+
+        @Override
+        protected String doInBackground(GoogleSignInAccount... accounts) {
+            String token = null;
+
+            try {
+                token = GoogleAuthUtil.getToken(getApplicationContext(), accounts[0].getEmail(), "oauth2:profile email");
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (GoogleAuthException e) {
+                e.printStackTrace();
+            }
+
+            return token;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            Log.e(LOG_TAG, "Access token: " + s);
+        }
     }
 
 
